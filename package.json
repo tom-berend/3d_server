@@ -1,0 +1,26 @@
+{
+  "name": "restcord",
+  "version": "1.0.0",
+  "description": "The RESTful API for Devo, a Discord bot.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chiphyr/restcord.js.git"
+  },
+  "author": "Chiphyr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chiphyr/restcord.js/issues"
+  },
+  "homepage": "https://github.com/chiphyr/restcord.js#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chalk": "^2.4.2",
+    "discord.js": "github:discordjs/discord.js",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1"
+  }
+}
