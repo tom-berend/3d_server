@@ -1,0 +1,17 @@
+
+
+2019-12-09 07:23:38
+IN:  "received this $_REQUEST"
+OUT: {"cmd":"test"}
+
+2019-12-09 07:23:38
+IN:  []
+OUT: {"success":"1","msg":"command test received","yourP1Was":"s:0:\"\";"}
+
+2019-12-09 07:24:08
+IN:  "received this $_REQUEST"
+OUT: {"cmd":"test"}
+
+2019-12-09 07:24:08
+IN:  []
+OUT: {"success":"1","msg":"command test received","yourP1Was":"s:0:\"\";"}

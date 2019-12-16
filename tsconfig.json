@@ -9,18 +9,16 @@
         "noImplicitReturns": true,
         "noImplicitThis": true,
         "moduleResolution": "node",
-        "sourceMap": true,
+        "inlineSourceMap": true,
         "rootDir": "src",
         "outDir": "dist",
-        "baseUrl": ".",
-        "paths": {
-            "*": [
-                "node_modules/*",
-                "dist/*"
-            ]
-        }
+        "baseUrl": "."
     },
     "include": [
-        "src/**/*"
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
     ]
 }

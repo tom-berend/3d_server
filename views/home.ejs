@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>RESTcord.js by Chiphyr</title>
-    <link rel="stylesheet" type="text/html href="server.css">
-</head>
+
+<%- include stdHead.ejs %>
+
 <body>
     <h1>RESTcord.js by Chiphyr and Tom </h1>
-    <p>Welcome to the homepage of the <b>RESTcord</b> API.<br><a href="https://github.com/Chiphyr/RESTcord.js">GitHub</a><br><a href="https://documenter.getpostman.com/view/8001184/SVSBuXhJ?version=latest">Documentation</a></p>
+    <p>Welcome to the homepage of the <b>RESTcord</b> API.<br><a
+            href="https://github.com/Chiphyr/RESTcord.js">GitHub</a><br><a
+            href="https://documenter.getpostman.com/view/8001184/SVSBuXhJ?version=latest">Documentation</a></p>
+    <img src="images/anime1.png" height="100px"><br>
+
+    <p>views = <%= views %></p>
+
+    <!-- views/pages/index.ejs -->
+    <h2>Variable</h2>
+    <p><%= tagline %></p>
+    ...
+    <ul>
+        <% drinks.forEach((drink) => { %>
+            <li><%= drink.name %> - <%= drink.drunkness %></li>
+        <% }); %>
+    </ul>
+    ...
+    <form action="/login" method="post">
+        First name:<br>
+        <input type="text" name="name" value="tberend">
+        <br>
+        Password:<br>
+        <input type="password" name="password" value="">
+        <br><br>
+        <input type="submit" value="Submit">
+      </form>
 </body>
+
 </html>
