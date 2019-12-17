@@ -2,29 +2,32 @@
 
 
 import express, { Request, Response } from 'express'
-import chalk from 'chalk'
+import { success, info, error, status } from './utils'
 import * as config from './config.json'
 import { SessionDB } from './database.js'
+import chalk from 'chalk'
 
 import * as fs from 'fs'
 
-// console helpers
-function success(msg: string) { console.log(chalk.green.italic('[SUCCESS]') + " " + chalk.bold(msg)) }
-function info(msg: string) { console.log(chalk.blue.italic('[INFO]') + " " + chalk.bold(msg)) }
-function error(msg: string) { console.log(chalk.red.italic('[ERROR]') + " " + chalk.bold(msg)) }
 
-
-async function testDatabaseFunction() {
-    // test the session database
+async function testSessionDB() {
     let sesDB = new SessionDB()
-    return new Promise((resolve, reject) => {
-        sesDB.testSession2()
-        .then((row) => { info('testing all done ' + JSON.stringify(row) ) })
-    })
+    // these tests run in parallel
+    sesDB.testSession2('secret1')
+    sesDB.testSession2('secret2')
+    sesDB.testSession2('secret3')
+    sesDB.testSession2('secret4')
+    sesDB.testSession2('secret5')
+    sesDB.testSession2('secret6')
 }
 
-testDatabaseFunction()
-info('testing NOT all done - use the PROMISE !!')
+// let promise = sesDB.testSession2()
+// promise.then((row) => { info('testing all done ' + JSON.stringify(row)) })
+
+testSessionDB()
+info('testing NOT all done - use the PROMISES !!')
+
+
 
 
 //////////////////////////////////////////
