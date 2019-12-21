@@ -1,6 +1,7 @@
 import { Database, Statement } from 'sqlite3'
-import { success, info, error, status } from './utils'
+import { logThisFile, success, info, error, status } from './utils'
 
+// logThisFile(__filename)  // logging of sql calls and results
 
 
 class DataObject {  // encapsulate SQLite with promise-based methods
@@ -23,7 +24,7 @@ class DataObject {  // encapsulate SQLite with promise-based methods
 
 
     open(): Promise<Database> {
-        info(`open: ${this.dbFilePath} `)
+        info(`open: ${this.dbFilePath} `,__filename)
         // tslint:disable-next-line: no-shadowed-variable
         return new Promise((resolve, reject) => {
             if (this.db !== undefined) {  // already have a database object
@@ -43,7 +44,7 @@ class DataObject {  // encapsulate SQLite with promise-based methods
 
 
     close(): Promise<Database> {
-        info(`close`)
+        info(`close`,__filename)
         // tslint:disable-next-line: no-shadowed-variable
         return new Promise((resolve, reject) => {
             this.db.close((err) => {
@@ -58,7 +59,7 @@ class DataObject {  // encapsulate SQLite with promise-based methods
     }
 
     runPromise(sql: string, params: any[] = []): Promise<Database> {
-        info(`${sql} ` + JSON.stringify(params))
+        info(`${sql} ` + JSON.stringify(params),__filename)
         // tslint:disable-next-line: no-shadowed-variable
         return new Promise((resolve, reject) => {
             this.db.run(sql, params, (err) => {
@@ -66,7 +67,7 @@ class DataObject {  // encapsulate SQLite with promise-based methods
                     error('54 ' + err.message)
                     reject(err)
                 } else {
-                    status('in resolve of runPromise ' + sql)
+                    status('in resolve of runPromise ' + sql,__filename)
                     resolve()
                 }
             })
@@ -74,7 +75,7 @@ class DataObject {  // encapsulate SQLite with promise-based methods
     }
 
     getPromise(sql: string, params: any[]): Promise<Database> {
-        info(`${sql} ` + JSON.stringify(params))
+        info(`${sql} ` + JSON.stringify(params),__filename)
         // tslint:disable-next-line: no-shadowed-variable
         return new Promise((resolve, reject) => {
             this.db.get(sql, params, (err, row) => {
@@ -82,7 +83,7 @@ class DataObject {  // encapsulate SQLite with promise-based methods
                     error('70 ' + err.message)
                     reject(err)
                 } else {
-                    status('in resolve of getPromise ' + sql)
+                    status('in resolve of getPromise ' + sql,__filename)
                     resolve(row)
                 }
             })
@@ -143,7 +144,7 @@ export class SessionDB {
             let newExpiry = Date.now() + this.bestBefore  // refresh the expiry date
             this.db.runPromise(`update ${this.tableName} set jsonSession = ?, expireDate =  ? where sessionID = ?`, [session.jsonSession, newExpiry, session.sessionID])
                 .then(() => {
-                    status('in then of putSession')
+                    status('in then of putSession',__filename)
                     resolve()
                 })
                 .catch((err) => {
@@ -159,7 +160,7 @@ export class SessionDB {
             let newExpiry = Date.now() + this.bestBefore  // refresh the expiry date
             this.db.runPromise(`INSERT INTO ${this.tableName} (sessionID, jsonSession,expireDate) values (?,?,?)`, [session.sessionID, session.jsonSession, newExpiry])
                 .then(() => {
-                    status('in then of newSession')
+                    status('in then of newSession',__filename)
                     resolve()
                 })
                 .catch((err) => {
@@ -179,17 +180,17 @@ export class SessionDB {
                         .then(() => {
                             this.db.getPromise(`SELECT * FROM ${this.tableName} where sessionid = ?`, [sessionID])
                                 .then(async (row) => {
-                                    status('in getSession, row is ' + JSON.stringify(row))
+                                    status('in getSession, row is ' + JSON.stringify(row),__filename)
                                     // row may be undefined if session doesn't exist
                                     if (row === undefined) {
-                                        status('row is undefined, we will insert an empty')
+                                        status('row is undefined, we will insert an empty',__filename)
                                         session = { sessionID, jsonSession: JSON.stringify({}) }
                                         await this.newSession(session)
                                     } else {
-                                        status('row is ' + JSON.stringify(row))
+                                        status('row is ' + JSON.stringify(row),__filename)
                                         session = row as unknown as ISession   // can return db row as ISession
                                     }
-                                    status('converted to ' + JSON.stringify(session))
+                                    status('converted to ' + JSON.stringify(session),__filename)
                                     resolve(session)
                                 })
 
@@ -262,3 +263,4 @@ export class SessionDB {
     }
 
 }
+
